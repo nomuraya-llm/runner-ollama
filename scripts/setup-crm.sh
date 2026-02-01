@@ -79,16 +79,26 @@ else
     echo -e "${RED}✗ モデルファイルが見つかりません${NC}"
     echo "  期待パス: $MODEL_FILE"
     echo
-    echo "モデルのダウンロード方法:"
-    echo "  1. Hugging Face からダウンロード"
-    echo "     https://huggingface.co/Qwen/Qwen2.5-7B-Instruct-GGUF"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo "新規環境の場合は full-setup.sh を使用してください:"
+    echo "  bash $SCRIPT_DIR/full-setup.sh"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     echo
-    echo "  2. model-qwen/ に配置"
-    echo "     cp Qwen2.5-7B-Instruct-Q4_K_M.gguf ~/workspace-ai/nomuraya-llm/model-qwen/"
+    echo "手動でダウンロードする場合:"
+    echo
+    echo "  1. model-qwenディレクトリ作成"
+    echo "     mkdir -p ~/workspace-ai/nomuraya-llm/model-qwen"
+    echo
+    echo "  2. モデルダウンロード（約4.4GB）"
+    echo "     cd ~/workspace-ai/nomuraya-llm/model-qwen"
+    echo "     curl -L -o Qwen2.5-7B-Instruct-Q4_K_M.gguf \\"
+    echo "       https://huggingface.co/Qwen/Qwen2.5-7B-Instruct-GGUF/resolve/main/qwen2.5-7b-instruct-q4_k_m.gguf"
     echo
     echo "  3. シンボリックリンク作成"
     echo "     cd $ROOT_DIR/models"
-    echo "     ln -s ../../model-qwen/Qwen2.5-7B-Instruct-Q4_K_M.gguf ."
+    echo "     ln -sf ../../model-qwen/Qwen2.5-7B-Instruct-Q4_K_M.gguf ."
+    echo
+    echo "詳細: $ROOT_DIR/INSTALL.md"
     exit 1
 fi
 
