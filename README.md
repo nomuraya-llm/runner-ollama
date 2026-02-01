@@ -1,15 +1,46 @@
-# Ollama + VOICEVOX 統合環境
+# Ollama ローカルLLM環境
 
-完全無料のローカルLLM・TTS環境構築リポジトリ
+完全無料のローカルLLM環境構築リポジトリ
 
 ## 概要
 
-このリポジトリは、以下の完全無料なローカルAI環境を構築・管理します：
+このリポジトリは、ローカルLLM実行環境を構築・管理します。
 
-- **Ollama**: ローカルLLM実行環境（対話AI）
-- **VOICEVOX**: 日本語音声合成エンジン（TTS）
+**主な用途**:
+- **Operation CRM**: アウトバウンド支援・研修シミュレーション
+- **AI-IVR**: 電話応答システム
 
 APIキー不要、レート制限なし、完全にオフラインで動作可能です。
+
+## クイックスタート（Operation CRM向け）
+
+```bash
+# セットアップ
+./scripts/setup-crm.sh
+
+# 環境変数設定
+export AI_PROVIDER=ollama
+export OLLAMA_MODEL=qwen2.5-7b-crm
+
+# CRM起動
+cd ~/workspace-ai/nomuraya-job-ai-ivr/operation-crm
+npm run dev
+```
+
+## モデル管理
+
+モデルファイル（GGUF）は `nomuraya-llm/model-*` で管理し、シンボリックリンクで参照します。
+
+```
+nomuraya-llm/
+├── model-qwen/
+│   └── Qwen2.5-7B-Instruct-Q4_K_M.gguf  # 実体（約4.4GB）
+└── runner-ollama/
+    ├── models/
+    │   └── Qwen2.5-7B-Instruct-Q4_K_M.gguf -> ../../model-qwen/...  # シンボリックリンク
+    └── configs/
+        └── qwen2.5-7b.Modelfile  # カスタムモデル定義
+```
 
 ## 動作確認済み環境
 
@@ -17,9 +48,8 @@ APIキー不要、レート制限なし、完全にオフラインで動作可�
 - **メモリ**: 32GB
 - **OS**: macOS
 - **Ollama**: v0.x
-- **VOICEVOX**: 0.14.x
 
-## クイックスタート
+## 従来のセットアップ（汎用）
 
 ### 1. 環境構築（ワンコマンド）
 
@@ -30,7 +60,6 @@ APIキー不要、レート制限なし、完全にオフラインで動作可�
 このスクリプトが以下を自動実行します：
 - Ollamaのインストール確認
 - 推奨モデル（Phi-3.5-mini）のダウンロード
-- VOICEVOXの起動確認
 - 動作テスト
 
 ### 2. サービス起動

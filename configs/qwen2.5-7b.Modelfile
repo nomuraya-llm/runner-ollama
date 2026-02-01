@@ -1,0 +1,27 @@
+# Qwen2.5-7B-Instruct for Operation CRM
+# アウトバウンド支援・研修シミュレーション用
+
+# モデルファイル（シンボリックリンク経由で参照）
+FROM ../models/Qwen2.5-7B-Instruct-Q4_K_M.gguf
+
+# テンプレート（Qwen2.5形式）
+TEMPLATE """{{ if .System }}<|im_start|>system
+{{ .System }}<|im_end|>
+{{ end }}{{ if .Prompt }}<|im_start|>user
+{{ .Prompt }}<|im_end|>
+{{ end }}<|im_start|>assistant
+{{ .Response }}<|im_end|>
+"""
+
+# パラメータ
+PARAMETER temperature 0.7
+PARAMETER top_p 0.9
+PARAMETER top_k 40
+PARAMETER num_ctx 4096
+PARAMETER stop "<|im_start|>"
+PARAMETER stop "<|im_end|>"
+
+# システム情報
+SYSTEM """あなたは日本語で応答する優秀なAIアシスタントです。
+コールセンター業務をサポートする役割を持っています。
+簡潔で実用的な応答を心がけてください。"""
